@@ -24,31 +24,35 @@ namespace aria2c_service
             startInfo.CreateNoWindow = false;
             startInfo.UseShellExecute = false;
             startInfo.FileName = "aria2c.exe";
-            startInfo.Arguments = "--enable-rpc --rpc-listen-all --log=aria2c_rpc.log";
-            if (Directory.Exists(new KnownFolder(KnownFolderType.Downloads).DefaultPath))
-            {
-                startInfo.Arguments = startInfo.Arguments + " --dir = " + new KnownFolder(KnownFolderType.Downloads).DefaultPath;
-                Process.Start(startInfo);
-            }
-            else
-            {
-                try
-                {
-                    // Try to create the directory.
-                    Directory.CreateDirectory(new KnownFolder(KnownFolderType.Downloads).DefaultPath);
-                    startInfo.Arguments = startInfo.Arguments + " --dir = " + new KnownFolder(KnownFolderType.Downloads).DefaultPath;
-                    Process.Start(startInfo);
-                }
-                catch (Exception exception)
-                {
-                    string sSource = "aria2c_rpc";
+            string arguments = "--enable-rpc --rpc-listen-all";
+            
+            //string arguments = "--enable-rpc --rpc-listen-all --log=aria2c_rpc.log";
+            //if (Directory.Exists(new KnownFolder(KnownFolderType.Downloads).DefaultPath))
+            //{
+            //    arguments = arguments + " --dir = " + new KnownFolder(KnownFolderType.Downloads).DefaultPath;
+            //}
+            //else
+            //{
+            //    try
+            //    {
+            //        // Try to create the directory.
+            //        Directory.CreateDirectory(new KnownFolder(KnownFolderType.Downloads).DefaultPath);
+            //        arguments = arguments + " --dir=" + new KnownFolder(KnownFolderType.Downloads).DefaultPath;
+            //    }
+            //    catch (Exception exception)
+            //    {
+            //        string sSource = "aria2c_rpc";
 
-                    if (!EventLog.SourceExists(sSource))
-                        EventLog.CreateEventSource(sSource, "Application");
+            //        if (!EventLog.SourceExists(sSource))
+            //            EventLog.CreateEventSource(sSource, "Application");
 
-                    EventLog.WriteEntry(sSource, "Default downloads directory can't be created. Exception is " + exception.ToString(), EventLogEntryType.Error);
-                }
-            }
+            //        EventLog.WriteEntry(sSource, "Default downloads directory can't be created. Exception is " + exception.ToString(), EventLogEntryType.Error);
+            //    }
+            //}
+
+            startInfo.Arguments = arguments;
+            Process.Start(startInfo);
+
         }
 
         protected override void OnStop()
