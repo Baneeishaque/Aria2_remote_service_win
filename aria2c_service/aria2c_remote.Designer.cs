@@ -1,6 +1,6 @@
 ﻿namespace aria2c_service
 {
-    partial class Service1
+    partial class aria2c_remote
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,8 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
-            this.ServiceName = "Service1";
+            // 
+            // Service1
+            // 
+            this.ServiceName = "aria2c_remote";
+
         }
 
         #endregion

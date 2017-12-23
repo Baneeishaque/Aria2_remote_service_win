@@ -16,7 +16,7 @@ namespace aria2c_service
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[]
             {
-                new Service1()
+                new aria2c_remote()
             };
             ServiceBase.Run(ServicesToRun);
         }
