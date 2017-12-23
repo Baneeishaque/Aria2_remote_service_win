@@ -24,9 +24,11 @@ namespace aria2c_service
             startInfo.CreateNoWindow = false;
             startInfo.UseShellExecute = false;
             startInfo.FileName = "aria2c.exe";
-            string arguments = "--enable-rpc --rpc-listen-all";
-            
-            //string arguments = "--enable-rpc --rpc-listen-all --log=aria2c_rpc.log";
+
+            //string arguments = "--enable-rpc --rpc-listen-all";
+
+            string arguments = "--enable-rpc --rpc-listen-all --log=aria2c_rpc.log";
+
             //if (Directory.Exists(new KnownFolder(KnownFolderType.Downloads).DefaultPath))
             //{
             //    arguments = arguments + " --dir = " + new KnownFolder(KnownFolderType.Downloads).DefaultPath;
