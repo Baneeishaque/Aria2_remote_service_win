@@ -1,13 +1,5 @@
-﻿using Syroot.Windows.IO;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
+﻿using System.Diagnostics;
 using System.ServiceProcess;
-using System.Text;
 
 namespace aria2c_service
 {
@@ -23,9 +15,9 @@ namespace aria2c_service
             ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.CreateNoWindow = false;
             startInfo.UseShellExecute = false;
-            startInfo.FileName = "aria2c.exe";
+            startInfo.FileName = @"C:\Programs\aria2-1.33.1-win-64bit-build1\aria2c.exe";
 
-            string arguments = "--enable-rpc --rpc-listen-all --log=aria2c_rpc.log";
+            string arguments = @"--conf-path C:\Programs\aria2_repository\aria2.conf --log=C:\Programs\aria2_repository\aria2_rpc.log";
 
             //write_event_logs_for_application("aria2c_rpc", "Path : "+new KnownFolder(KnownFolderType.Downloads).Path, EventLogEntryType.Information);
             //write_event_logs_for_application("aria2c_rpc", "Default Path : " + new KnownFolder(KnownFolderType.Downloads).DefaultPath, EventLogEntryType.Information);

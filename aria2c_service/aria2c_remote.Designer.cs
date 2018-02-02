@@ -29,8 +29,9 @@
         private void InitializeComponent()
         {
             // 
-            // Service1
+            // aria2c_remote
             // 
+            this.CanPauseAndContinue = true;
             this.ServiceName = "aria2c_remote";
 
         }
