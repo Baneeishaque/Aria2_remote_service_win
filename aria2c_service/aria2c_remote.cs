@@ -15,9 +15,12 @@ namespace aria2c_service
             ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.CreateNoWindow = false;
             startInfo.UseShellExecute = false;
-            startInfo.FileName = @"C:\Programs\aria2-1.33.1-win-64bit-build1\aria2c.exe";
 
-            string arguments = @"--conf-path C:\Programs\aria2_repository\aria2.conf --log=C:\Programs\aria2_repository\aria2_rpc.log";
+            //startInfo.FileName = @"C:\Programs\aria2-1.33.1-win-64bit-build1\aria2c.exe";
+            //string arguments = @"--conf-path C:\Programs\aria2_repository\aria2.conf --log=C:\Programs\aria2_repository\aria2_rpc.log";
+
+            startInfo.FileName = @"F:\Programs\aria2-1.33.1-win-64bit-build1\aria2c.exe";
+            string arguments = @"--conf-path F:\Programs\aria2.conf --log=F:\Programs\aria2_rpc.log";
 
             //write_event_logs_for_application("aria2c_rpc", "Path : "+new KnownFolder(KnownFolderType.Downloads).Path, EventLogEntryType.Information);
             //write_event_logs_for_application("aria2c_rpc", "Default Path : " + new KnownFolder(KnownFolderType.Downloads).DefaultPath, EventLogEntryType.Information);
@@ -43,6 +46,8 @@ namespace aria2c_service
             //write_event_logs_for_application("aria2c_rpc", "Arguments " + arguments, EventLogEntryType.Information);
             startInfo.Arguments = arguments;
             Process.Start(startInfo);
+
+
 
         }
 
