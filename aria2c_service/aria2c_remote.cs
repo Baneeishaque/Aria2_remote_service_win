@@ -1,10 +1,12 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.ServiceProcess;
 
 namespace aria2c_service
 {
     public partial class aria2c_remote : ServiceBase
     {
+        int aria2c_process_id;
         public aria2c_remote()
         {
             InitializeComponent();
@@ -16,11 +18,11 @@ namespace aria2c_service
             startInfo.CreateNoWindow = false;
             startInfo.UseShellExecute = false;
 
-            //startInfo.FileName = @"C:\Programs\aria2-1.33.1-win-64bit-build1\aria2c.exe";
-            //string arguments = @"--conf-path C:\Programs\aria2_repository\aria2.conf --log=C:\Programs\aria2_repository\aria2_rpc.log";
+            startInfo.FileName = @"C:\Programs\aria2-1.33.1-win-64bit-build1\aria2c.exe";
+            string arguments = @"--conf-path C:\Programs\aria2_repository\aria2.conf --log=C:\Programs\aria2_repository\aria2_rpc.log";
 
-            startInfo.FileName = @"F:\Programs\aria2-1.33.1-win-64bit-build1\aria2c.exe";
-            string arguments = @"--conf-path F:\Programs\aria2.conf --log=F:\Programs\aria2_rpc.log";
+            //startInfo.FileName = @"F:\Programs\aria2-1.33.1-win-64bit-build1\aria2c.exe";
+            //string arguments = @"--conf-path F:\Programs\aria2.conf --log=F:\Programs\aria2_rpc.log";
 
             //write_event_logs_for_application("aria2c_rpc", "Path : "+new KnownFolder(KnownFolderType.Downloads).Path, EventLogEntryType.Information);
             //write_event_logs_for_application("aria2c_rpc", "Default Path : " + new KnownFolder(KnownFolderType.Downloads).DefaultPath, EventLogEntryType.Information);
@@ -45,10 +47,9 @@ namespace aria2c_service
 
             //write_event_logs_for_application("aria2c_rpc", "Arguments " + arguments, EventLogEntryType.Information);
             startInfo.Arguments = arguments;
-            Process.Start(startInfo);
-
-
-
+            //Process.Start(startInfo);
+            //Process proc = Process.Start(startInfo);
+            aria2c_process_id = Process.Start(startInfo).Id;
         }
 
         void write_event_logs_for_application(string sSource, string event_message, EventLogEntryType event_type)
@@ -61,6 +62,16 @@ namespace aria2c_service
 
         protected override void OnStop()
         {
+
+            try
+            {
+                Process proc = Process.GetProcessById(aria2c_process_id);
+                proc.Kill();
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
     }
 }

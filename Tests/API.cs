@@ -10,13 +10,10 @@ namespace Tests
     {
         public static String API_Root = "http_API";
 
-        //public static String select_Members = "select_Members.php";
-        //public static String select_Departments = "select_Departments.php";
-        //public static String select_Semesters = "select_Semesters.php";
-        //public static String insert_Member = "insert_Member.php";
-        //public static String insert_Transaction = "insert_Transaction.php";
         public static String select_Configuration = "select_Configuration.php";
         public static String select_Tasks = "select_Tasks.php";
+        public static String update_Task = "update_Task.php";
+        public static String update_Host = "update_Host.php";
 
         public static String get_API(String API_Method)
         {
