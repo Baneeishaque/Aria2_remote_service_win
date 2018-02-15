@@ -1,9 +1,7 @@
-﻿using EasyHttp.Http;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
@@ -16,15 +14,7 @@ namespace Tests
         static WebClient webClient = new WebClient();
         static void Main(string[] args)
         {
-            // Create a timer
-            //System.Timers.Timer myTimer = new System.Timers.Timer();
-            //// Tell the timer what to do when it elapses
-            //myTimer.Elapsed += new ElapsedEventHandler(aria2c_service_main);
-            //// Set it to go off every 1 minutes
-            //myTimer.Interval = 1 * 60 * 1000;
-            //// And start it        
-            //myTimer.Enabled = true;
-
+           
             while (true)
             {
                 aria2c_service_main();
@@ -42,10 +32,10 @@ namespace Tests
 
         public static void get_Tasks()
         {
-            //Console.WriteLine(Environment.MachineName);
+            Console.WriteLine(Environment.MachineName+" Sync. Started...");
             var get_response = http_client.Get(API.get_API(API.select_Tasks), new { host = Environment.MachineName });
-            Console.WriteLine(get_response.RawText);
-            Console.ReadKey();
+            Console.WriteLine("New Tasks : "+get_response.RawText);
+            //Console.ReadKey();
 
 
             JArray array = JArray.Parse(get_response.RawText);
@@ -59,44 +49,69 @@ namespace Tests
             }
             else if ((Int32)JObject.Parse(array[0].ToString())["error_status"] == 0)
             {
-                //List<Task> tasks = JsonConvert.DeserializeObject<List<Task>>(get_response.RawText);
-
-                List<Task> tasks;
-                for (int i = 0; i < tasks.Count; i++)
+                List<Task> tasks=new List<Task>();
+                for (int i = 1; i < array.Count; i++)
                 {
+                    JObject json_Task = JObject.Parse(array[i].ToString());
+                    Task current_task = new Task();
+                    current_task.id = (String)json_Task["id"];
+                    current_task.url = (String)json_Task["url"];
+                    tasks.Add(current_task);
 
-                }
-                    for (int i = 0; i < tasks.Count; i++)
-                {
-                    var add_response = webClient.UploadString("http://localhost:6800/jsonrpc", "POST", create_json_request(tasks[i].url, tasks[i].id));
-                    Console.WriteLine(add_response);
-                    Console.ReadKey();
+                    Console.WriteLine("ID : "+current_task.id+", Task : " + current_task.url);
+                    Console.WriteLine("Request : "+create_json_request(current_task.url, current_task.id));
+                    //Console.ReadKey();
+
+                    var add_response = webClient.UploadString("http://localhost:6800/jsonrpc", "POST", create_json_request(current_task.url, current_task.id));
+                    Console.WriteLine("Task Addition Response : "+add_response);
+                    //Console.ReadKey();
 
                     JObject json_object = JObject.Parse(add_response);
 
-                    var update_response = http_client.Post(API.get_API(API.update_Task), new { id = tasks[i].id, gid = json_object["result"] }, HttpContentTypes.ApplicationXWwwFormUrlEncoded);
-                    Console.WriteLine(update_response.RawText);
-                    Console.ReadKey();
-
-                    array = JArray.Parse(update_response.RawText);
-
-                    if ((Int32)JObject.Parse(array[0].ToString())["error_status"] == 0)
-                    {
-                        Console.WriteLine("Task updated successfully");
-                    }
-                    else if ((Int32)JObject.Parse(array[0].ToString())["error_status"] == 1)
-                    {
-                        Console.WriteLine("Error : " + JObject.Parse(array[0].ToString())["error"] + " - " + JObject.Parse(array[0].ToString())["error_number"]);
-                    }
-                    else
-                    {
-                        Console.WriteLine("Check response");
-                    }
+                    update_task(current_task.id, json_object["result"].ToString());
+                    
                 }
+
             }
             else
             {
                 Console.WriteLine("Check response");
+            }
+        }
+
+        private static void update_task(String id,String gid)
+        {
+
+            var client = new System.Net.Http.HttpClient();
+
+            var pairs = new List<KeyValuePair<string, string>>
+            {
+                new KeyValuePair<string, string>("id", id),
+                new KeyValuePair<string, string>("gid", gid)
+            };
+
+            var content = new FormUrlEncodedContent(pairs);
+
+            var update_response = client.PostAsync(API.get_API(API.update_Task), content).Result;
+
+            if (update_response.IsSuccessStatusCode)
+            {
+                Console.WriteLine(update_response.Content.ReadAsStringAsync().Result);
+                //Console.ReadKey();
+
+                if ((Int32)JObject.Parse(update_response.Content.ReadAsStringAsync().Result)["error_status"] == 0)
+                {
+                    Console.WriteLine("Task updated successfully");
+                }
+                else if ((Int32)JObject.Parse(update_response.Content.ReadAsStringAsync().Result)["error_status"] == 1)
+                {
+                    Console.WriteLine("Error : " + JObject.Parse(update_response.Content.ReadAsStringAsync().Result)["error"] + " - " + JObject.Parse(update_response.Content.ReadAsStringAsync().Result)["error_number"]);
+                }
+                else
+                {
+                    Console.WriteLine("Check response");
+                }
+
             }
         }
 
@@ -151,9 +166,7 @@ namespace Tests
 
         private static void update_host()
         {
-            //Console.WriteLine(Environment.MachineName);
-            //var update_response = http_client.Post(API.get_API(API.update_Host), new { name = Environment.MachineName }, HttpContentTypes.ApplicationJson);
-
+            
             var client = new System.Net.Http.HttpClient();
 
             var pairs = new List<KeyValuePair<string, string>>

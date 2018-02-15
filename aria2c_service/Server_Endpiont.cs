@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Tests
+namespace aria2c_service
 {
     class Server_Endpiont
     {
