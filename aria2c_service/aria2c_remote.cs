@@ -1,20 +1,27 @@
 ﻿using System;
 using System.Diagnostics;
 using System.ServiceProcess;
-using System.Threading;
 using System.Net;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using System.Net.Http;
+using System.Timers;
+using System.IO;
 
 namespace aria2c_service
 {
     public partial class aria2c_remote : ServiceBase
     {
         int aria2c_process_id;
-        static EasyHttp.Http.HttpClient http_client = new EasyHttp.Http.HttpClient();
+        //static EasyHttp.Http.HttpClient http_client = new EasyHttp.Http.HttpClient();
         static WebClient webClient = new WebClient();
+
+        /// <summary>
+        /// This timer willl run the process at the interval specified (currently 1 minute) once enabled
+        /// </summary>
+        System.Timers.Timer timer = new System.Timers.Timer(1000*60);
+
         public aria2c_remote()
         {
             InitializeComponent();
@@ -37,11 +44,23 @@ namespace aria2c_service
             
             aria2c_process_id = Process.Start(startInfo).Id;
 
-            while (true)
-            {
-                aria2c_service_main();
-                Thread.Sleep(1 * 60 * 1000);
-            }
+            //while (true)
+            //{
+            //    aria2c_service_main();
+            //    Thread.Sleep(1 * 60 * 1000);
+            //}
+
+            //aria2c_service_main();
+
+            // point the timer elapsed to the handler
+            timer.Elapsed += new ElapsedEventHandler(timer_Elapsed);
+            // turn on the timer
+            timer.Enabled = true;
+        }
+
+        private void timer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            aria2c_service_main();
         }
 
         public static void write_event_logs_for_application(string sSource, string event_message, EventLogEntryType event_type)
@@ -54,7 +73,7 @@ namespace aria2c_service
 
         protected override void OnStop()
         {
-
+            timer.Enabled = false;
             try
             {
                 Process proc = Process.GetProcessById(aria2c_process_id);
@@ -66,25 +85,65 @@ namespace aria2c_service
             }
         }
 
+        private static int secondsElapsed = 0;
         public static void aria2c_service_main()
         {
+            secondsElapsed += 10;
             if (check_system_status())
             {
                 get_Tasks();
             }
         }
 
+        public static string Get(string uri)
+        {
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uri);
+            request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
+
+            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            using (Stream stream = response.GetResponseStream())
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                return reader.ReadToEnd();
+            }
+        }
+
+        public static string Get_parametered_URL(string base_URL, List<KeyValuePair<string, string>> openWith)
+        {
+            for(int i=0;i<openWith.Count;i++)
+            {
+                KeyValuePair<string, string> kvp = openWith[i];
+                if (i==0)
+                {
+                    base_URL = base_URL + "?";
+                }
+                else
+                {
+                    base_URL = base_URL + "&";
+                }
+                base_URL=base_URL + kvp.Key + "=" + kvp.Value;
+            }
+            
+            return base_URL;
+        }
+
         public static void get_Tasks()
         {
             //Console.WriteLine(Environment.MachineName + " Sync. Started...");
             write_event_logs_for_application("aria2c_rpc", Environment.MachineName + " Sync. Started...", EventLogEntryType.Information);
-            var get_response = http_client.Get(API.get_API(API.select_Tasks), new { host = Environment.MachineName });
+
+            //var get_response = http_client.Get(API.get_API(API.select_Tasks), new { host = Environment.MachineName });
+            var get_response = Get(Get_parametered_URL(API.get_API(API.select_Tasks), new List<KeyValuePair<string, string>>
+            {
+                new KeyValuePair<string, string>("host", Environment.MachineName)
+            }));
+
             //Console.WriteLine("New Tasks : " + get_response.RawText);
-            write_event_logs_for_application("aria2c_rpc", "New Tasks : " + get_response.RawText, EventLogEntryType.Information);
+            write_event_logs_for_application("aria2c_rpc", "New Tasks : " + get_response, EventLogEntryType.Information);
             //Console.ReadKey();
 
 
-            JArray array = JArray.Parse(get_response.RawText);
+            JArray array = JArray.Parse(get_response);
             if ((Int32)JObject.Parse(array[0].ToString())["error_status"] == 1)
             {
                 //Console.WriteLine("Error : " + JObject.Parse(array[0].ToString())["error"] + " - " + JObject.Parse(array[0].ToString())["error_number"]);
@@ -147,6 +206,8 @@ namespace aria2c_service
                 new KeyValuePair<string, string>("gid", gid)
             };
 
+            
+
             var content = new FormUrlEncodedContent(pairs);
 
             var update_response = client.PostAsync(API.get_API(API.update_Task), content).Result;
@@ -180,6 +241,8 @@ namespace aria2c_service
             }
         }
 
+       
+
         public static string create_json_request(string url, string id)
         {
             var jsonObject = new JObject();
@@ -196,9 +259,10 @@ namespace aria2c_service
 
         private static bool check_system_status()
         {
-            var response = http_client.Get(API.get_API(API.select_Configuration));
+            //var response = http_client.Get(API.get_API(API.select_Configuration));
+            var response = Get(API.get_API(API.select_Configuration));
 
-            JArray array = JArray.Parse(response.RawText);
+            JArray array = JArray.Parse(response);
 
             if ((Int32)JObject.Parse(array[0].ToString())["error_status"] == 0)
             {

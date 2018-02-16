@@ -33,6 +33,7 @@ namespace Tests
         public static void get_Tasks()
         {
             Console.WriteLine(Environment.MachineName+" Sync. Started...");
+            Console.WriteLine(API.get_API(API.select_Tasks));
             var get_response = http_client.Get(API.get_API(API.select_Tasks), new { host = Environment.MachineName });
             Console.WriteLine("New Tasks : "+get_response.RawText);
             //Console.ReadKey();
