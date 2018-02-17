@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Net;
 using System.Net.Http;
@@ -16,7 +17,8 @@ namespace Tests
         static WebClient webClient = new WebClient();
         static void Main(string[] args)
         {
-           
+            Console.WriteLine(ConfigurationManager.AppSettings["aria2c_HOME"] + "\\aria2c.exe");
+            Console.ReadKey();
             while (true)
             {
                 aria2c_service_main();

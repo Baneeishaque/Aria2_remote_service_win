@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using System.Timers;
 using System.IO;
 using System.Text;
+using System.Configuration;
 
 namespace aria2c_service
 {
@@ -33,8 +34,11 @@ namespace aria2c_service
             startInfo.CreateNoWindow = false;
             startInfo.UseShellExecute = false;
 
-            startInfo.FileName = @"C:\Programs\aria2-1.33.1-win-64bit-build1\aria2c.exe";
-            string arguments = @"--conf-path C:\Programs\aria2_repository\aria2.conf --log=C:\Programs\aria2_repository\aria2_rpc.log";
+            //startInfo.FileName = @"C:\Programs\aria2-1.33.1-win-64bit-build1\aria2c.exe";
+            //string arguments = @"--conf-path C:\Programs\aria2_repository\aria2.conf --log=C:\Programs\aria2_repository\aria2_rpc.log";
+
+            startInfo.FileName = @ConfigurationManager.AppSettings["aria2c_HOME"] +"\\aria2c.exe";
+            string arguments = @"--conf-path "+ ConfigurationManager.AppSettings["aria2c_repository"] + "\\aria2.conf --log=" + ConfigurationManager.AppSettings["aria2c_repository"] + "\\aria2_rpc.log";
 
             //startInfo.FileName = @"F:\Programs\aria2-1.33.1-win-64bit-build1\aria2c.exe";
             //string arguments = @"--conf-path F:\Programs\aria2.conf --log=F:\Programs\aria2_rpc.log";
