@@ -2,8 +2,10 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Threading;
 
 namespace Tests
@@ -29,6 +31,7 @@ namespace Tests
                 get_Tasks();
             }
         }
+
 
         public static void get_Tasks()
         {
@@ -167,34 +170,80 @@ namespace Tests
 
         private static void update_host()
         {
-            
-            var client = new System.Net.Http.HttpClient();
 
-            var pairs = new List<KeyValuePair<string, string>>
+            //var client = new System.Net.Http.HttpClient();
+
+            //var pairs = new List<KeyValuePair<string, string>>
+            //{
+            //    new KeyValuePair<string, string>("name", Environment.MachineName)
+            //};
+
+            //var content = new FormUrlEncodedContent(pairs);
+
+            //var update_response = client.PostAsync(API.get_API(API.update_Host), content).Result;
+
+            //if (update_response.IsSuccessStatusCode)
+            //{
+            //    //Console.WriteLine(update_response.Content.ReadAsStringAsync().Result);
+            //    //Console.ReadKey();
+
+            //    if ((Int32)JObject.Parse(update_response.Content.ReadAsStringAsync().Result)["error_status"] == 0)
+            //    {
+            //        Console.WriteLine("Host updated successfully");
+            //    }
+            //    else if ((Int32)JObject.Parse(update_response.Content.ReadAsStringAsync().Result)["error_status"] == 1)
+            //    {
+            //        Console.WriteLine("Error : " + JObject.Parse(update_response.Content.ReadAsStringAsync().Result)["error"] + " - " + JObject.Parse(update_response.Content.ReadAsStringAsync().Result)["error_number"]);
+            //    }
+            //    else
+            //    {
+            //        Console.WriteLine("Check response");
+            //    }
+
+            //}
+
+
+            var request = (HttpWebRequest)WebRequest.Create(API.get_API(API.update_Host));
+
+            var postData = "name=" + Environment.MachineName;
+            var data = Encoding.ASCII.GetBytes(postData);
+
+            request.Method = "POST";
+            request.ContentType = "application/x-www-form-urlencoded";
+            request.ContentLength = data.Length;
+
+            using (var stream = request.GetRequestStream())
             {
-                new KeyValuePair<string, string>("name", Environment.MachineName)
-            };
+                stream.Write(data, 0, data.Length);
+            }
 
-            var content = new FormUrlEncodedContent(pairs);
+            var response = (HttpWebResponse)request.GetResponse();
 
-            var update_response = client.PostAsync(API.get_API(API.update_Host), content).Result;
+            var responseString = new StreamReader(response.GetResponseStream()).ReadToEnd();
 
-            if (update_response.IsSuccessStatusCode)
+            if (response.StatusCode == HttpStatusCode.OK)
             {
-                //Console.WriteLine(update_response.Content.ReadAsStringAsync().Result);
-                //Console.ReadKey();
+                Console.WriteLine(responseString);
+                //write_event_logs_for_application("aria2c_rpc", "Host update response : " + responseString, EventLogEntryType.Information);
+                Console.ReadKey();
 
-                if ((Int32)JObject.Parse(update_response.Content.ReadAsStringAsync().Result)["error_status"] == 0)
+                if ((Int32)JObject.Parse(responseString)["error_status"] == 0)
                 {
                     Console.WriteLine("Host updated successfully");
+                    //write_event_logs_for_application("aria2c_rpc", "Host updated successfully", EventLogEntryType.Information);
+
                 }
-                else if ((Int32)JObject.Parse(update_response.Content.ReadAsStringAsync().Result)["error_status"] == 1)
+                else if ((Int32)JObject.Parse(responseString)["error_status"] == 1)
                 {
-                    Console.WriteLine("Error : " + JObject.Parse(update_response.Content.ReadAsStringAsync().Result)["error"] + " - " + JObject.Parse(update_response.Content.ReadAsStringAsync().Result)["error_number"]);
+                    Console.WriteLine("Error : " + JObject.Parse(responseString)["error"] + " - " + JObject.Parse(responseString)["error_number"]);
+                    //write_event_logs_for_application("aria2c_rpc", "Error : " + JObject.Parse(responseString)["error"] + " - " + JObject.Parse(responseString)["error_number"], EventLogEntryType.Information);
+
                 }
                 else
                 {
                     Console.WriteLine("Check response");
+                    //write_event_logs_for_application("aria2c_rpc", "Check response", EventLogEntryType.Information);
+
                 }
 
             }
