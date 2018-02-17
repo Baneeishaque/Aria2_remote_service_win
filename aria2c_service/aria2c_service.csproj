@@ -98,7 +98,18 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="builds\aria2c_service.exe.config" />
+    <None Include="builds\dependencies\aria2.conf" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="builds\aria2c_service.exe" />
+    <Content Include="builds\aria2c_service.pdb" />
+    <Content Include="builds\dependencies\aria2c.exe" />
+    <Content Include="builds\dependencies\session.txt" />
+    <Content Include="builds\Newtonsoft.Json.dll" />
+    <Content Include="builds\Newtonsoft.Json.xml" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
