@@ -62,7 +62,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="API.cs" />
     <Compile Include="aria2c_remote.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -77,8 +76,6 @@
       <DependentUpon>ProjectInstaller.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Server_Endpiont.cs" />
-    <Compile Include="Task.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="aria2c_remote.resx">
@@ -111,6 +108,11 @@
     <Content Include="builds\Newtonsoft.Json.dll" />
     <Content Include="builds\Newtonsoft.Json.xml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\aria2c_service_lib\aria2c_service_lib.csproj">
+      <Project>{76c92037-f2c5-41be-9d75-d8c53507ba69}</Project>
+      <Name>aria2c_service_lib</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "aria2c_service", "aria2c_se
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{0DB5BE9F-9F80-4A2B-97DC-5E6996B81C38}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "aria2c_service_lib", "aria2c_service_lib\aria2c_service_lib.csproj", "{76C92037-F2C5-41BE-9D75-D8C53507BA69}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{0DB5BE9F-9F80-4A2B-97DC-5E6996B81C38}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0DB5BE9F-9F80-4A2B-97DC-5E6996B81C38}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0DB5BE9F-9F80-4A2B-97DC-5E6996B81C38}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76C92037-F2C5-41BE-9D75-D8C53507BA69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76C92037-F2C5-41BE-9D75-D8C53507BA69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76C92037-F2C5-41BE-9D75-D8C53507BA69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76C92037-F2C5-41BE-9D75-D8C53507BA69}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
