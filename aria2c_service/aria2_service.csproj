@@ -50,8 +50,13 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net35\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net35-full\log4net.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net35\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -59,14 +64,15 @@
     <Reference Include="System.Management" />
     <Reference Include="System.Data" />
     <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="aria2c_remote.cs">
+    <Compile Include="Aria2_remote_service.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="aria2c_remote.Designer.cs">
-      <DependentUpon>aria2c_remote.cs</DependentUpon>
+    <Compile Include="Aria2_remote_service.Designer.cs">
+      <DependentUpon>Aria2_remote_service.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="ProjectInstaller.cs">
@@ -78,8 +84,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="aria2c_remote.resx">
-      <DependentUpon>aria2c_remote.cs</DependentUpon>
+    <EmbeddedResource Include="Aria2_remote_service.resx">
+      <DependentUpon>Aria2_remote_service.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ProjectInstaller.resx">
       <DependentUpon>ProjectInstaller.cs</DependentUpon>
@@ -98,6 +104,9 @@
     </None>
     <None Include="builds\aria2c_service.exe.config" />
     <None Include="builds\dependencies\aria2.conf" />
+    <None Include="log4net.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -109,9 +118,21 @@
     <Content Include="builds\Newtonsoft.Json.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\aria2c_service_lib\aria2c_service_lib.csproj">
+    <ProjectReference Include="..\aria2c_service_lib\aria2_JSON_RPC_lib.csproj">
       <Project>{76c92037-f2c5-41be-9d75-d8c53507ba69}</Project>
-      <Name>aria2c_service_lib</Name>
+      <Name>aria2_JSON_RPC_lib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\commons_lib\commons_lib.csproj">
+      <Project>{2306def5-65aa-42b7-a277-430b10839f68}</Project>
+      <Name>commons_lib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\commons_server_client_lib\commons_server_client_lib.csproj">
+      <Project>{2706c191-7fed-4bfa-896c-6d6425488148}</Project>
+      <Name>commons_server_client_lib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\commons_service_lib\commons_service_win_lib.csproj">
+      <Project>{1c9c8ef8-02e5-449c-a4d6-dfccf6277e15}</Project>
+      <Name>commons_service_win_lib</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

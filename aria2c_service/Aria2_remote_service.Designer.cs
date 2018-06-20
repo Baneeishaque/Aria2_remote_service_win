@@ -1,6 +1,6 @@
-﻿namespace aria2c_service
+﻿namespace aria2_common
 {
-    partial class aria2c_remote
+    partial class Aria2_remote_service
     {
         /// <summary> 
         /// Required designer variable.

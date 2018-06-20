@@ -1,13 +1,25 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2020
+VisualStudioVersion = 15.0.27004.2008
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "aria2c_service", "aria2c_service\aria2c_service.csproj", "{F0164169-1B23-4B47-88F2-05A1EF387660}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "aria2_service", "aria2c_service\aria2_service.csproj", "{F0164169-1B23-4B47-88F2-05A1EF387660}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{0DB5BE9F-9F80-4A2B-97DC-5E6996B81C38}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aria2_Client", "Tests\Aria2_Client.csproj", "{0DB5BE9F-9F80-4A2B-97DC-5E6996B81C38}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "aria2c_service_lib", "aria2c_service_lib\aria2c_service_lib.csproj", "{76C92037-F2C5-41BE-9D75-D8C53507BA69}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "aria2_JSON_RPC_lib", "aria2c_service_lib\aria2_JSON_RPC_lib.csproj", "{76C92037-F2C5-41BE-9D75-D8C53507BA69}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "commons_service_win_lib", "commons_service_lib\commons_service_win_lib.csproj", "{1C9C8EF8-02E5-449C-A4D6-DFCCF6277E15}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "commons_lib", "commons_lib\commons_lib.csproj", "{2306DEF5-65AA-42B7-A277-430B10839F68}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "commons_server_client_lib", "commons_server_client_lib\commons_server_client_lib.csproj", "{2706C191-7FED-4BFA-896C-6D6425488148}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "commons_JSON_RPC_lib", "commons_JSON_RPC_lib\commons_JSON_RPC_lib.csproj", "{B7630362-FBE5-4CC2-910C-62E9FCC41DC1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aria2_Client_Lib", "aria2_rpc_client_lib\Aria2_Client_Lib.csproj", "{52382C1B-EC32-47B0-8AD1-BDF2DC9449A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aria2_Common_Lib", "aria2_common_lib\Aria2_Common_Lib.csproj", "{A525FCF4-5976-4982-8C1F-37F1614D220A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +39,30 @@ Global
 		{76C92037-F2C5-41BE-9D75-D8C53507BA69}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{76C92037-F2C5-41BE-9D75-D8C53507BA69}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{76C92037-F2C5-41BE-9D75-D8C53507BA69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C9C8EF8-02E5-449C-A4D6-DFCCF6277E15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C9C8EF8-02E5-449C-A4D6-DFCCF6277E15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C9C8EF8-02E5-449C-A4D6-DFCCF6277E15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C9C8EF8-02E5-449C-A4D6-DFCCF6277E15}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2306DEF5-65AA-42B7-A277-430B10839F68}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2306DEF5-65AA-42B7-A277-430B10839F68}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2306DEF5-65AA-42B7-A277-430B10839F68}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2306DEF5-65AA-42B7-A277-430B10839F68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2706C191-7FED-4BFA-896C-6D6425488148}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2706C191-7FED-4BFA-896C-6D6425488148}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2706C191-7FED-4BFA-896C-6D6425488148}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2706C191-7FED-4BFA-896C-6D6425488148}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7630362-FBE5-4CC2-910C-62E9FCC41DC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7630362-FBE5-4CC2-910C-62E9FCC41DC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7630362-FBE5-4CC2-910C-62E9FCC41DC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7630362-FBE5-4CC2-910C-62E9FCC41DC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52382C1B-EC32-47B0-8AD1-BDF2DC9449A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52382C1B-EC32-47B0-8AD1-BDF2DC9449A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52382C1B-EC32-47B0-8AD1-BDF2DC9449A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52382C1B-EC32-47B0-8AD1-BDF2DC9449A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A525FCF4-5976-4982-8C1F-37F1614D220A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A525FCF4-5976-4982-8C1F-37F1614D220A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A525FCF4-5976-4982-8C1F-37F1614D220A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A525FCF4-5976-4982-8C1F-37F1614D220A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

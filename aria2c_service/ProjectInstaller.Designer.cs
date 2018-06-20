@@ -1,4 +1,4 @@
-﻿namespace aria2c_service
+﻿namespace aria2_common
 {
     partial class ProjectInstaller
     {

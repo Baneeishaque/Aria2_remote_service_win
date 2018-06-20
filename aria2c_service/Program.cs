@@ -1,6 +1,6 @@
 ﻿using System.ServiceProcess;
 
-namespace aria2c_service
+namespace aria2_common
 {
     static class Program
     {
@@ -12,7 +12,7 @@ namespace aria2c_service
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[]
             {
-                new aria2c_remote()
+                new Aria2_remote_service()
             };
             ServiceBase.Run(ServicesToRun);
         }

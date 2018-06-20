@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Configuration.Install;
 
-namespace aria2c_service
+namespace aria2_common
 {
     [RunInstaller(true)]
     public partial class ProjectInstaller : System.Configuration.Install.Installer
