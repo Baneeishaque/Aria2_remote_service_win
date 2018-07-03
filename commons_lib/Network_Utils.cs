@@ -79,6 +79,7 @@ namespace commons_lib
 
         public static int Check_error(string source,JObject error_node)
         {
+            //TODO : Use interface for success
             if ((Int32)error_node["error_status"] == 0)
             {
                 return 0;

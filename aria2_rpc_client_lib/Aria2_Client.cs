@@ -13,7 +13,7 @@ using System.Net;
 using System.IO;
 using aria2_rpc_lib;
 using Newtonsoft.Json.Linq;
-using aria2c_service_lib;
+using aria2c_JSON_RPC_lib;
 using Newtonsoft.Json;
 using aria2_common_lib;
 
@@ -97,7 +97,7 @@ namespace aria2_client_lib
             {
                 Update_host();
                 Update_tasks();
-                //Get_Tasks();
+                Get_Tasks();
             }
             else if (server_status == -1)
             {
@@ -197,6 +197,165 @@ namespace aria2_client_lib
             //}
         }
 
+        public static void Get_Tasks()
+        {
+            //Console.WriteLine(Environment.MachineName + " Sync. Started...");
+            //Console.WriteLine(API_Wrapper.get_API(API_Wrapper.SELECT_TASKS));
+            //var get_response = http_client.Get(API_Wrapper.get_API(API_Wrapper.SELECT_TASKS), new { host = Environment.MachineName });
+            //Console.WriteLine("New Tasks : " + get_response.RawText);
+            //Console.ReadKey();
+
+            Log_Utils.Add_system_event_and_log(Aria2_Client_Constants.EVENT_SOURCE, Environment.MachineName + " Sync. Started...", EventLogEntryType.Information);
+            var response = Network_Utils.Get_Request(Network_Utils.Get_parametered_URL(API_Wrapper.get_API(Aria2_Remote_API_Constants.SELECT_TASKS),new List<KeyValuePair<string, string>> { new KeyValuePair<string, string>("host",Environment.MachineName)}));
+            Log_Utils.Add_system_event_and_log(Aria2_Client_Constants.EVENT_SOURCE, "New Tasks : " + response.ToString(), EventLogEntryType.Information);
+
+            //TODO : Add No Entry on Error Check
+
+            JArray array = JArray.Parse(response);
+
+            if ((Int32)JObject.Parse(array[0].ToString())["error_status"] == 1)
+            {
+                Log_Utils.Add_system_event_and_log(Aria2_Client_Constants.EVENT_SOURCE, "Error : " + array[0]["error"] + " - " + array[0]["error_number"], EventLogEntryType.Information);
+            }
+            else if ((Int32)JObject.Parse(array[0].ToString())["error_status"] == 2)
+            {
+                Log_Utils.Add_system_event_and_log(Aria2_Client_Constants.EVENT_SOURCE, "No Tasks", EventLogEntryType.Information); Console.WriteLine("");
+            }
+            else if ((Int32)JObject.Parse(array[0].ToString())["error_status"] == 0)
+            {
+                //List<Task> tasks = new List<Task>();
+                //for (int i = 1; i < array.Count; i++)
+                //{
+                //    JObject json_Task = JObject.Parse(array[i].ToString());
+                //    Task current_task = new Task();
+                //    current_task.id = (String)json_Task["id"];
+                //    current_task.url = (String)json_Task["url"];
+                //    tasks.Add(current_task);
+
+                //    Console.WriteLine("ID : " + current_task.id + ", Task : " + current_task.url);
+                //    Console.WriteLine("Request : " + Create_json_request_addUri(current_task.url, current_task.id));
+                //    //Console.ReadKey();
+
+                //    var add_response = webClient.UploadString("http://localhost:6800/jsonrpc", "POST", Create_json_request_addUri(current_task.url, current_task.id));
+                //    Console.WriteLine("Task Addition Response : " + add_response);
+                //    //Console.ReadKey();
+
+                //    JObject json_object = JObject.Parse(add_response);
+
+                //    Update_task_gid(current_task.id, json_object["result"].ToString());
+                //}
+            }
+            else
+            {
+                Log_Utils.Add_system_event_and_log(Aria2_Client_Constants.EVENT_SOURCE, "Check response, response : " + response, EventLogEntryType.Information);
+            }
+        }
+
+        private static void Update_task_gid(String id, String gid)
+        {
+
+            //var client = new HttpClient();
+
+            //var pairs = new List<KeyValuePair<string, string>>
+            //{
+            //    new KeyValuePair<string, string>("id", id),
+            //    new KeyValuePair<string, string>("gid", gid)
+            //};
+
+            //var content = new FormUrlEncodedContent(pairs);
+
+            //var update_response = client.PostAsync(API_Wrapper.get_API(API_Wrapper.UPDATE_TASK_GID), content).Result;
+
+            //if (update_response.IsSuccessStatusCode)
+            //{
+            //    Console.WriteLine(update_response.Content.ReadAsStringAsync().Result);
+            //    //Console.ReadKey();
+
+            //    if ((Int32)JObject.Parse(update_response.Content.ReadAsStringAsync().Result)["error_status"] == 0)
+            //    {
+            //        Console.WriteLine("Task updated successfully");
+            //    }
+            //    else if ((Int32)JObject.Parse(update_response.Content.ReadAsStringAsync().Result)["error_status"] == 1)
+            //    {
+            //        Console.WriteLine("Error : " + JObject.Parse(update_response.Content.ReadAsStringAsync().Result)["error"] + " - " + JObject.Parse(update_response.Content.ReadAsStringAsync().Result)["error_number"]);
+            //    }
+            //    else
+            //    {
+            //        Console.WriteLine("Check response");
+            //    }
+
+            //}
+        }
+
+        private static void Update_task_current_status(String id, String current_status)
+        {
+
+            //var client = new HttpClient();
+
+            //var pairs = new List<KeyValuePair<string, string>>
+            //{
+            //    new KeyValuePair<string, string>("id", id),
+            //    new KeyValuePair<string, string>("current_status", current_status)
+            //};
+
+            //var content = new FormUrlEncodedContent(pairs);
+
+            //var update_response = client.PostAsync(API_Wrapper.get_API(API_Wrapper.UPDATE_TASK_CURRENT_STATUS), content).Result;
+
+            //if (update_response.IsSuccessStatusCode)
+            //{
+            //    Console.WriteLine(update_response.Content.ReadAsStringAsync().Result);
+            //    //Console.ReadKey();
+
+            //    if ((Int32)JObject.Parse(update_response.Content.ReadAsStringAsync().Result)["error_status"] == 0)
+            //    {
+            //        Console.WriteLine("Task updated successfully");
+            //    }
+            //    else if ((Int32)JObject.Parse(update_response.Content.ReadAsStringAsync().Result)["error_status"] == 1)
+            //    {
+            //        Console.WriteLine("Error : " + JObject.Parse(update_response.Content.ReadAsStringAsync().Result)["error"] + " - " + JObject.Parse(update_response.Content.ReadAsStringAsync().Result)["error_number"]);
+            //    }
+            //    else
+            //    {
+            //        Console.WriteLine("Check response, response : " + update_response);
+            //    }
+
+            //}
+        }
+
+        public static string Create_json_request_addUri(string url, string id)
+        {
+            var jsonObject = new JObject
+            {
+                ["jsonrpc"] = "2.0",
+                ["method"] = "aria2.addUri",
+                ["id"] = id
+            };
+            var requestParams = new JArray();
+            var uris = new JArray
+            {
+                url
+            };
+            requestParams.Add(uris);
+            jsonObject["params"] = requestParams;
+            return JsonConvert.SerializeObject(jsonObject);
+        }
+
+        public static string Create_json_request_tellStatus(string gid, string id)
+        {
+            var jsonObject = new JObject
+            {
+                ["jsonrpc"] = "2.0",
+                ["method"] = "aria2.tellStatus",
+                ["id"] = id
+            };
+            var requestParams = new JArray
+            {
+                gid
+            };
+            jsonObject["params"] = requestParams;
+            return JsonConvert.SerializeObject(jsonObject);
+        }
 
     }
 }

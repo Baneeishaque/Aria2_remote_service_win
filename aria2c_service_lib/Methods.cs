@@ -9,7 +9,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
-namespace aria2c_service_lib
+namespace aria2c_JSON_RPC_lib
 {
     public class Methods
     {
