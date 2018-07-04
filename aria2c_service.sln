@@ -3,23 +3,25 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2008
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "aria2_service", "aria2c_service\aria2_service.csproj", "{F0164169-1B23-4B47-88F2-05A1EF387660}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aria2_Remote_Service", "aria2c_service\Aria2_Remote_Service.csproj", "{F0164169-1B23-4B47-88F2-05A1EF387660}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aria2_Client", "Tests\Aria2_Client.csproj", "{0DB5BE9F-9F80-4A2B-97DC-5E6996B81C38}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "aria2_JSON_RPC_lib", "aria2c_service_lib\aria2_JSON_RPC_lib.csproj", "{76C92037-F2C5-41BE-9D75-D8C53507BA69}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aria2_JSON_RPC_Lib", "aria2c_service_lib\Aria2_JSON_RPC_Lib.csproj", "{76C92037-F2C5-41BE-9D75-D8C53507BA69}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "commons_service_win_lib", "commons_service_lib\commons_service_win_lib.csproj", "{1C9C8EF8-02E5-449C-A4D6-DFCCF6277E15}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commons_Service_Win_Lib", "commons_service_lib\Commons_Service_Win_Lib.csproj", "{1C9C8EF8-02E5-449C-A4D6-DFCCF6277E15}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "commons_lib", "commons_lib\commons_lib.csproj", "{2306DEF5-65AA-42B7-A277-430B10839F68}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commons_Lib", "commons_lib\Commons_Lib.csproj", "{2306DEF5-65AA-42B7-A277-430B10839F68}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "commons_server_client_lib", "commons_server_client_lib\commons_server_client_lib.csproj", "{2706C191-7FED-4BFA-896C-6D6425488148}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commons_Server_Client_Lib", "commons_server_client_lib\Commons_Server_Client_Lib.csproj", "{2706C191-7FED-4BFA-896C-6D6425488148}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "commons_JSON_RPC_lib", "commons_JSON_RPC_lib\commons_JSON_RPC_lib.csproj", "{B7630362-FBE5-4CC2-910C-62E9FCC41DC1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commons_JSON_RPC_Lib", "commons_JSON_RPC_lib\Commons_JSON_RPC_Lib.csproj", "{B7630362-FBE5-4CC2-910C-62E9FCC41DC1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aria2_Client_Lib", "aria2_rpc_client_lib\Aria2_Client_Lib.csproj", "{52382C1B-EC32-47B0-8AD1-BDF2DC9449A3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aria2_Common_Lib", "aria2_common_lib\Aria2_Common_Lib.csproj", "{A525FCF4-5976-4982-8C1F-37F1614D220A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aria2_Remote_Common_Lib", "Aria2_Remote_Common_Lib\Aria2_Remote_Common_Lib.csproj", "{E890955A-7E6D-4BC4-A766-5E6255098CE1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{A525FCF4-5976-4982-8C1F-37F1614D220A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A525FCF4-5976-4982-8C1F-37F1614D220A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A525FCF4-5976-4982-8C1F-37F1614D220A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E890955A-7E6D-4BC4-A766-5E6255098CE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E890955A-7E6D-4BC4-A766-5E6255098CE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E890955A-7E6D-4BC4-A766-5E6255098CE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E890955A-7E6D-4BC4-A766-5E6255098CE1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -42,9 +42,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\commons_lib\commons_lib.csproj">
+    <ProjectReference Include="..\commons_lib\Commons_Lib.csproj">
       <Project>{2306def5-65aa-42b7-a277-430b10839f68}</Project>
-      <Name>commons_lib</Name>
+      <Name>Commons_Lib</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

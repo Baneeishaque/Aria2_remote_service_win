@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Configuration.Install;
 
-namespace aria2_common
+namespace Aria2_Remote_Service
 {
     [RunInstaller(true)]
     public partial class ProjectInstaller : System.Configuration.Install.Installer

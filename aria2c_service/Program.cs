@@ -1,6 +1,6 @@
 ﻿using System.ServiceProcess;
 
-namespace aria2_common
+namespace Aria2_Remote_Service
 {
     static class Program
     {

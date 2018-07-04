@@ -62,13 +62,13 @@
       <Project>{a525fcf4-5976-4982-8c1f-37f1614d220a}</Project>
       <Name>Aria2_Common_Lib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\commons_JSON_RPC_lib\commons_JSON_RPC_lib.csproj">
+    <ProjectReference Include="..\commons_JSON_RPC_lib\Commons_JSON_RPC_Lib.csproj">
       <Project>{b7630362-fbe5-4cc2-910c-62e9fcc41dc1}</Project>
-      <Name>commons_JSON_RPC_lib</Name>
+      <Name>Commons_JSON_RPC_Lib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\commons_lib\commons_lib.csproj">
+    <ProjectReference Include="..\commons_lib\Commons_Lib.csproj">
       <Project>{2306def5-65aa-42b7-a277-430b10839f68}</Project>
-      <Name>commons_lib</Name>
+      <Name>Commons_Lib</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

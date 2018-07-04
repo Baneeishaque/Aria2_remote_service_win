@@ -1,7 +1,7 @@
 ﻿using commons_lib;
 using System;
 
-namespace aria2_common
+namespace Aria2_Remote_Common_Lib
 {
     public class API_Wrapper : Http_API_Constants
     {

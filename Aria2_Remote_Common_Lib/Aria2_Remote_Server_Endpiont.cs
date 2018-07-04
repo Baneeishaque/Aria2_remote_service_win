@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace aria2_common
+namespace Aria2_Remote_Common_Lib
 {
     class Aria2_Remote_Server_Endpiont
     {

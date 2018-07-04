@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace aria2_common
+namespace aria2_common_lib
 {
     public class Aria2_RPC_Constants
     {

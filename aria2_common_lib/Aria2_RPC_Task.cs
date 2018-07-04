@@ -5,7 +5,7 @@ using System.Text;
 
 namespace aria2_common_lib
 {
-    public class Aria2_Task
+    public class Aria2_RPC_Task
     {
         public string completedLength { get; set; }
         public string connections { get; set; }

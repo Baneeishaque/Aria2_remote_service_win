@@ -1,4 +1,4 @@
-﻿namespace aria2_common
+﻿namespace Aria2_Remote_Service
 {
     partial class Aria2_remote_service
     {

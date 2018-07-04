@@ -1,21 +1,16 @@
-﻿using aria2_client_lib;
-using commons_server_client_lib;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Configuration;
 using System.Diagnostics;
 using commons_lib;
 using System.Timers;
-using aria2_common;
 using System.Net;
 using System.IO;
-using aria2_rpc_lib;
 using Newtonsoft.Json.Linq;
 using aria2c_JSON_RPC_lib;
 using Newtonsoft.Json;
 using aria2_common_lib;
+using Aria2_Remote_Common_Lib;
 
 namespace aria2_client_lib
 {
@@ -137,9 +132,9 @@ namespace aria2_client_lib
         {
             Log_Utils.Add_system_event_and_log(Aria2_Client_Constants.EVENT_SOURCE, Environment.MachineName + " Updating task status...", EventLogEntryType.Information);
 
-            IList<Aria2_Task> aria2_tasks = Methods.get_tasks(ARIA2_HOST, ARIA2_PORT, ARIA2_JSON_RPC_FILE_NAME, ARIA2_ACCESS_PROTOCOL);
+            IList<Aria2_RPC_Task> aria2_rpc_tasks = Methods.get_tasks(ARIA2_HOST, ARIA2_PORT, ARIA2_JSON_RPC_FILE_NAME, ARIA2_ACCESS_PROTOCOL);
 
-            foreach(Aria2_Task aria2_task in aria2_tasks)
+            foreach(Aria2_RPC_Task aria2_task in aria2_rpc_tasks)
             {
                 Log_Utils.Add_system_event_and_log(Aria2_Client_Constants.EVENT_SOURCE, "Task URL : " + aria2_task.files[0].uris[0].uri, EventLogEntryType.Information);
             }
@@ -197,7 +192,7 @@ namespace aria2_client_lib
             //}
         }
 
-        public static void Get_Tasks()
+        private void Get_Tasks()
         {
             //Console.WriteLine(Environment.MachineName + " Sync. Started...");
             //Console.WriteLine(API_Wrapper.get_API(API_Wrapper.SELECT_TASKS));
@@ -207,7 +202,7 @@ namespace aria2_client_lib
 
             Log_Utils.Add_system_event_and_log(Aria2_Client_Constants.EVENT_SOURCE, Environment.MachineName + " Sync. Started...", EventLogEntryType.Information);
             var response = Network_Utils.Get_Request(Network_Utils.Get_parametered_URL(API_Wrapper.get_API(Aria2_Remote_API_Constants.SELECT_TASKS),new List<KeyValuePair<string, string>> { new KeyValuePair<string, string>("host",Environment.MachineName)}));
-            Log_Utils.Add_system_event_and_log(Aria2_Client_Constants.EVENT_SOURCE, "New Tasks : " + response.ToString(), EventLogEntryType.Information);
+            Log_Utils.Add_system_event_and_log(Aria2_Client_Constants.EVENT_SOURCE, "New Tasks Response : " + response.ToString(), EventLogEntryType.Information);
 
             //TODO : Add No Entry on Error Check
 
@@ -244,6 +239,23 @@ namespace aria2_client_lib
 
                 //    Update_task_gid(current_task.id, json_object["result"].ToString());
                 //}
+
+                array.RemoveAt(0);
+
+                Log_Utils.Add_system_event_and_log(Aria2_Client_Constants.EVENT_SOURCE, "New Tasks : " + array.ToString(), EventLogEntryType.Information);
+
+                //// serialize JSON results into .NET objects
+                IList<Aria2_Remote_Task> aria2_tasks = new List<Aria2_Remote_Task>();
+                aria2_tasks=array.ToObject<List<Aria2_Remote_Task>>();
+
+                foreach (Aria2_Remote_Task task in aria2_tasks)
+                {
+                    Log_Utils.Add_system_event_and_log(Aria2_Client_Constants.EVENT_SOURCE, "ID : " + task.id + ", Task : " + task.url, EventLogEntryType.Information);
+                    Log_Utils.Add_system_event_and_log(Aria2_Client_Constants.EVENT_SOURCE, "Add Uri Response : " + Methods.Add_Uri(task.url,ARIA2_HOST, ARIA2_PORT, ARIA2_JSON_RPC_FILE_NAME, ARIA2_ACCESS_PROTOCOL), EventLogEntryType.Information);
+                }
+
+                //return aria2_tasks;
+
             }
             else
             {

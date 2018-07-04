@@ -16,6 +16,7 @@ namespace commons_lib
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URL);
             request.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
 
+            //TODO : Handle Exceptions
             using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
             using (Stream stream = response.GetResponseStream())
             using (StreamReader reader = new StreamReader(stream))

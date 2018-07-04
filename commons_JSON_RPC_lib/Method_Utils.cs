@@ -7,7 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 
-namespace aria2c_JSON_RPC_lib
+namespace commons_JSON_RPC_lib
 {
     public class Method_Utils
     {

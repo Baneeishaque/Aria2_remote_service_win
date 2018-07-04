@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace aria2_common
+namespace Aria2_Remote_Common_Lib
 {
     public class Aria2_Remote_API_Constants
     {

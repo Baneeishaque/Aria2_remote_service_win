@@ -78,17 +78,21 @@
       <Project>{a525fcf4-5976-4982-8c1f-37f1614d220a}</Project>
       <Name>Aria2_Common_Lib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Aria2_Remote_Common_Lib\Aria2_Remote_Common_Lib.csproj">
+      <Project>{e890955a-7e6d-4bc4-a766-5e6255098ce1}</Project>
+      <Name>Aria2_Remote_Common_Lib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\aria2_rpc_client_lib\Aria2_Client_Lib.csproj">
       <Project>{52382c1b-ec32-47b0-8ad1-bdf2dc9449a3}</Project>
       <Name>Aria2_Client_Lib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\commons_lib\commons_lib.csproj">
+    <ProjectReference Include="..\commons_lib\Commons_Lib.csproj">
       <Project>{2306def5-65aa-42b7-a277-430b10839f68}</Project>
-      <Name>commons_lib</Name>
+      <Name>Commons_Lib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\commons_server_client_lib\commons_server_client_lib.csproj">
+    <ProjectReference Include="..\commons_server_client_lib\Commons_Server_Client_Lib.csproj">
       <Project>{2706c191-7fed-4bfa-896c-6d6425488148}</Project>
-      <Name>commons_server_client_lib</Name>
+      <Name>Commons_Server_Client_Lib</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

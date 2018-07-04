@@ -1,34 +1,39 @@
-﻿using System;
-using System.Diagnostics;
-using System.ServiceProcess;
+﻿using System.ServiceProcess;
 using System.Net;
 using Newtonsoft.Json.Linq;
-using System.Collections.Generic;
 using Newtonsoft.Json;
-using System.Timers;
-using System.IO;
-using System.Text;
-using System.Configuration;
-using commons_service_win_lib;
-using commons_lib;
-using aria2_rpc_lib;
 using commons_server_client_lib;
-using aria2_rpc_lib;
+using aria2_client_lib;
+using aria2_common_lib;
+using Aria2_Remote_Common_Lib;
 
-namespace aria2_common
+namespace Aria2_Remote_Service
 {
     public partial class Aria2_remote_service : ServiceBase
     {
         int aria2c_process_id;
 
         static WebClient webClient = new WebClient();
+        private readonly IService_Client_Utils aria2_client_interface = new Aria2_Client(API_Wrapper.get_API(Aria2_Remote_API_Constants.SELECT_CONFIGURATION), API_Wrapper.get_API(Aria2_Remote_API_Constants.UPDATE_HOST), Aria2_RPC_Constants.HOST);
 
         public Aria2_remote_service()
         {
             InitializeComponent();
         }
 
+        protected override void OnStart(string[] args)
+        {
+            aria2c_process_id = aria2_client_interface.Start_client();
+        }
+
+        protected override void OnStop()
+        {
+            aria2_client_interface.Stop_client(aria2c_process_id);
+        }
+
         private static int secondsElapsed = 0;
+
+
 
         //public void Aria2_remote()
         //{
@@ -170,60 +175,60 @@ namespace aria2_common
 
         //    TellAll.get_tasks(Aria2_Service_Constants.host);
 
-            //            Log_Utils.Add_system_event_and_log("aria2c_rpc", "Task tellStatus Response : " + status_response, EventLogEntryType.Information);
+        //            Log_Utils.Add_system_event_and_log("aria2c_rpc", "Task tellStatus Response : " + status_response, EventLogEntryType.Information);
 
 
-            //var get_response = Network_Utils.Get_Request(Network_Utils.Get_parametered_URL(API_Wrapper.get_API(API_Constants.SELECT_TASKS), new List<KeyValuePair<string, string>>
-            //{
-            //    new KeyValuePair<string, string>("host", Environment.MachineName)
-            //}));
+        //var get_response = Network_Utils.Get_Request(Network_Utils.Get_parametered_URL(API_Wrapper.get_API(API_Constants.SELECT_TASKS), new List<KeyValuePair<string, string>>
+        //{
+        //    new KeyValuePair<string, string>("host", Environment.MachineName)
+        //}));
 
-            //Log_Utils.Add_system_event_and_log(Aria2_Service_Constants.event_source, "Existing Tasks : " + get_response, EventLogEntryType.Information);
+        //Log_Utils.Add_system_event_and_log(Aria2_Service_Constants.event_source, "Existing Tasks : " + get_response, EventLogEntryType.Information);
 
-            //JArray array = JArray.Parse(get_response);
-            //if ((Int32)JObject.Parse(array[0].ToString())["error_status"] == 1)
-            //{
-            //    Log_Utils.Add_system_event_and_log("aria2c_rpc", "Error : " + JObject.Parse(array[0].ToString())["error"] + " - " + JObject.Parse(array[0].ToString())["error_number"], EventLogEntryType.Information);
-            //}
-            //else if ((Int32)JObject.Parse(array[0].ToString())["error_status"] == 2)
-            //{
-            //    Log_Utils.Add_system_event_and_log("aria2c_rpc", "No Tasks", EventLogEntryType.Information);
-            //}
-            //else if ((Int32)JObject.Parse(array[0].ToString())["error_status"] == 0)
-            //{
-            //    List<Task> tasks = new List<Task>();
-            //    for (int i = 1; i < array.Count; i++)
-            //    {
-            //        JObject json_Task = JObject.Parse(array[i].ToString());
-            //        Task current_task = new Task
-            //        {
-            //            id = (String)json_Task["id"],
-            //            gid = (String)json_Task["gid"]
-            //        };
-            //        tasks.Add(current_task);
+        //JArray array = JArray.Parse(get_response);
+        //if ((Int32)JObject.Parse(array[0].ToString())["error_status"] == 1)
+        //{
+        //    Log_Utils.Add_system_event_and_log("aria2c_rpc", "Error : " + JObject.Parse(array[0].ToString())["error"] + " - " + JObject.Parse(array[0].ToString())["error_number"], EventLogEntryType.Information);
+        //}
+        //else if ((Int32)JObject.Parse(array[0].ToString())["error_status"] == 2)
+        //{
+        //    Log_Utils.Add_system_event_and_log("aria2c_rpc", "No Tasks", EventLogEntryType.Information);
+        //}
+        //else if ((Int32)JObject.Parse(array[0].ToString())["error_status"] == 0)
+        //{
+        //    List<Task> tasks = new List<Task>();
+        //    for (int i = 1; i < array.Count; i++)
+        //    {
+        //        JObject json_Task = JObject.Parse(array[i].ToString());
+        //        Task current_task = new Task
+        //        {
+        //            id = (String)json_Task["id"],
+        //            gid = (String)json_Task["gid"]
+        //        };
+        //        tasks.Add(current_task);
 
-            //        Log_Utils.Add_system_event_and_log("aria2c_rpc", "ID : " + current_task.id + ", gid : " + current_task.gid, EventLogEntryType.Information);
-            //        Log_Utils.Add_system_event_and_log("aria2c_rpc", "Request : " + Create_json_request_tellStatus(current_task.gid, current_task.id), EventLogEntryType.Information);
+        //        Log_Utils.Add_system_event_and_log("aria2c_rpc", "ID : " + current_task.id + ", gid : " + current_task.gid, EventLogEntryType.Information);
+        //        Log_Utils.Add_system_event_and_log("aria2c_rpc", "Request : " + Create_json_request_tellStatus(current_task.gid, current_task.id), EventLogEntryType.Information);
 
-            //        try
-            //        {
-            //            var status_response = webClient.UploadString("http://localhost:6800/jsonrpc", "POST", Create_json_request_tellStatus(current_task.gid, current_task.id));
-            //            Log_Utils.Add_system_event_and_log("aria2c_rpc", "Task tellStatus Response : " + status_response, EventLogEntryType.Information);
+        //        try
+        //        {
+        //            var status_response = webClient.UploadString("http://localhost:6800/jsonrpc", "POST", Create_json_request_tellStatus(current_task.gid, current_task.id));
+        //            Log_Utils.Add_system_event_and_log("aria2c_rpc", "Task tellStatus Response : " + status_response, EventLogEntryType.Information);
 
-            //            JObject json_object = JObject.Parse(status_response);
+        //            JObject json_object = JObject.Parse(status_response);
 
-            //            Update_task_current_status(current_task.id, json_object.ToString());
-            //        }
-            //        catch (Exception e)
-            //        {
-            //            Log_Utils.Add_system_event_and_log("aria2c_rpc", "Task exception : " + e.ToString(), EventLogEntryType.Information);
-            //        }
-            //    }
-            //}
-            //else
-            //{
-            //    Log_Utils.Add_system_event_and_log("aria2c_rpc", "Check response, response : " + get_response, EventLogEntryType.Information);
-            //}
+        //            Update_task_current_status(current_task.id, json_object.ToString());
+        //        }
+        //        catch (Exception e)
+        //        {
+        //            Log_Utils.Add_system_event_and_log("aria2c_rpc", "Task exception : " + e.ToString(), EventLogEntryType.Information);
+        //        }
+        //    }
+        //}
+        //else
+        //{
+        //    Log_Utils.Add_system_event_and_log("aria2c_rpc", "Check response, response : " + get_response, EventLogEntryType.Information);
+        //}
         //}
 
         //private static void Update_task_current_status(String id, String current_status)

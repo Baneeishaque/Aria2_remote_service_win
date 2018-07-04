@@ -106,6 +106,7 @@
     <None Include="builds\dependencies\aria2.conf" />
     <None Include="log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
@@ -118,21 +119,33 @@
     <Content Include="builds\Newtonsoft.Json.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\aria2c_service_lib\aria2_JSON_RPC_lib.csproj">
+    <ProjectReference Include="..\aria2c_service_lib\Aria2_JSON_RPC_Lib.csproj">
       <Project>{76c92037-f2c5-41be-9d75-d8c53507ba69}</Project>
-      <Name>aria2_JSON_RPC_lib</Name>
+      <Name>Aria2_JSON_RPC_Lib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\commons_lib\commons_lib.csproj">
+    <ProjectReference Include="..\aria2_common_lib\Aria2_Common_Lib.csproj">
+      <Project>{A525FCF4-5976-4982-8C1F-37F1614D220A}</Project>
+      <Name>Aria2_Common_Lib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Aria2_Remote_Common_Lib\Aria2_Remote_Common_Lib.csproj">
+      <Project>{e890955a-7e6d-4bc4-a766-5e6255098ce1}</Project>
+      <Name>Aria2_Remote_Common_Lib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\aria2_rpc_client_lib\Aria2_Client_Lib.csproj">
+      <Project>{52382C1B-EC32-47B0-8AD1-BDF2DC9449A3}</Project>
+      <Name>Aria2_Client_Lib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\commons_lib\Commons_Lib.csproj">
       <Project>{2306def5-65aa-42b7-a277-430b10839f68}</Project>
-      <Name>commons_lib</Name>
+      <Name>Commons_Lib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\commons_server_client_lib\commons_server_client_lib.csproj">
+    <ProjectReference Include="..\commons_server_client_lib\Commons_Server_Client_Lib.csproj">
       <Project>{2706c191-7fed-4bfa-896c-6d6425488148}</Project>
-      <Name>commons_server_client_lib</Name>
+      <Name>Commons_Server_Client_Lib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\commons_service_lib\commons_service_win_lib.csproj">
+    <ProjectReference Include="..\commons_service_lib\Commons_Service_Win_Lib.csproj">
       <Project>{1c9c8ef8-02e5-449c-a4d6-dfccf6277e15}</Project>
-      <Name>commons_service_win_lib</Name>
+      <Name>Commons_Service_Win_Lib</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

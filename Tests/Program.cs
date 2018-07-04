@@ -1,10 +1,11 @@
 ﻿using aria2_client_lib;
-using aria2_common;
+using aria2_common_lib;
+using Aria2_Remote_Common_Lib;
 using commons_server_client_lib;
 using System;
 using System.Net;
 
-namespace Tests
+namespace Aria2_Client
 {
     class Program : IService_Client_Utils
     {
