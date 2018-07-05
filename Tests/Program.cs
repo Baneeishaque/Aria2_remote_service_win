@@ -5,7 +5,7 @@ using commons_server_client_lib;
 using System;
 using System.Net;
 
-namespace Aria2_Client
+namespace Aria2_Client_Program
 {
     class Program : IService_Client_Utils
     {

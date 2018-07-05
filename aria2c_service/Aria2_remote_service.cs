@@ -6,6 +6,8 @@ using commons_server_client_lib;
 using aria2_client_lib;
 using aria2_common_lib;
 using Aria2_Remote_Common_Lib;
+using commons_lib;
+using System.Diagnostics;
 
 namespace Aria2_Remote_Service
 {
@@ -23,6 +25,7 @@ namespace Aria2_Remote_Service
 
         protected override void OnStart(string[] args)
         {
+            Log_Utils.Add_system_event_and_log(Aria2_Remote_Service_Constants.EVENT_SOURCE, "Starting...", EventLogEntryType.Information);
             aria2c_process_id = aria2_client_interface.Start_client();
         }
 
@@ -31,7 +34,7 @@ namespace Aria2_Remote_Service
             aria2_client_interface.Stop_client(aria2c_process_id);
         }
 
-        private static int secondsElapsed = 0;
+        //private static int secondsElapsed = 0;
 
 
 

@@ -68,6 +68,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Aria2_Remote_Service_Constants.cs" />
     <Compile Include="Aria2_remote_service.cs">
       <SubType>Component</SubType>
     </Compile>

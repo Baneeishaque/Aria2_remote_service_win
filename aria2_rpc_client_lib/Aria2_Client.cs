@@ -54,11 +54,19 @@ namespace aria2_client_lib
 
             aria2c_process_id = Process_Utils.Start_with_arguments(Aria2_Client_Constants.EVENT_SOURCE, @ConfigurationManager.AppSettings["aria2_HOME"] + "\\" + ARIA2_EXE, arguments);
 
+            Log_Utils.Add_system_event_and_log(Aria2_Client_Constants.EVENT_SOURCE, "Timer Pointing..", EventLogEntryType.Information);
+
             // point the timer elapsed to the handler
             timer.Elapsed += new ElapsedEventHandler(Timer_Elapsed);
 
+            Log_Utils.Add_system_event_and_log(Aria2_Client_Constants.EVENT_SOURCE, "Timer Enabling...", EventLogEntryType.Information);
+
             // turn on the timer
             timer.Enabled = true;
+
+            Log_Utils.Add_system_event_and_log(Aria2_Client_Constants.EVENT_SOURCE, "Timer Enabled...", EventLogEntryType.Information);
+
+            Log_Utils.Add_system_event_and_log(Aria2_Client_Constants.EVENT_SOURCE, "Aria2 ID : "+aria2c_process_id, EventLogEntryType.Information);
 
             return aria2c_process_id;
         }
@@ -72,6 +80,10 @@ namespace aria2_client_lib
 
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
+            Log_Utils.Add_system_event_and_log(Aria2_Client_Constants.EVENT_SOURCE, "Timer Elapsed...", EventLogEntryType.Information);
+
+            Log_Utils.Add_system_event_and_log(Aria2_Client_Constants.EVENT_SOURCE, "idle Flag : " + idle_flag, EventLogEntryType.Information);
+
             if (idle_flag)
             {
                 Aria2_remote();
@@ -80,7 +92,14 @@ namespace aria2_client_lib
 
         public void Aria2_remote()
         {
+            Log_Utils.Add_system_event_and_log(Aria2_Client_Constants.EVENT_SOURCE, "On Remote...", EventLogEntryType.Information);
+
+            Log_Utils.Add_system_event_and_log(Aria2_Client_Constants.EVENT_SOURCE, "idle Flag : "+idle_flag, EventLogEntryType.Information);
+
             idle_flag = false;
+
+            Log_Utils.Add_system_event_and_log(Aria2_Client_Constants.EVENT_SOURCE, "idle Flag : " + idle_flag, EventLogEntryType.Information);
+
 
             secondsElapsed += 10;
 
@@ -100,6 +119,9 @@ namespace aria2_client_lib
             }
 
             idle_flag = true;
+
+            Log_Utils.Add_system_event_and_log(Aria2_Client_Constants.EVENT_SOURCE, "idle Flag : " + idle_flag, EventLogEntryType.Information);
+
         }
 
         private void Update_host()
