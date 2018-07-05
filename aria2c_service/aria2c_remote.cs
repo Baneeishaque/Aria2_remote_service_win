@@ -148,7 +148,7 @@ namespace aria2c_service
                     Task current_task = new Task
                     {
                         id = (String)json_Task["id"],
-                        url = (String)json_Task["url"]
+                        url = ((String)json_Task["url"]).Contains("http") ? (String)json_Task["url"] : "http://" + (String)json_Task["url"]
                     };
                     tasks.Add(current_task);
 
