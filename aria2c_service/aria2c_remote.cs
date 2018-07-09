@@ -20,14 +20,77 @@ namespace aria2c_service
         /// <summary>
         /// This timer willl run the process at the interval specified (currently 1 minute) once enabled
         /// </summary>
-        Timer timer = new System.Timers.Timer(1000 * 60);
+        Timer aria2_timer = new Timer(1000 * 60);
+        Timer internet_timer = new Timer(1000 * 10);
 
         public aria2c_remote()
         {
             InitializeComponent();
         }
 
+        public static bool CheckForInternetConnection()
+        {
+            Write_event_logs_for_application("aria2c_rpc", "Checking connectivity", EventLogEntryType.Information);
+            try
+            {
+                using (var client = new WebClient())
+                using (client.OpenRead(Server_Endpiont.Server_IP_Address))
+                {
+                    return true;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         protected override void OnStart(string[] args)
+        {
+            if(CheckForInternetConnection())
+            {
+                Write_event_logs_for_application("aria2c_rpc", "Connection Ok", EventLogEntryType.Information);
+                start_aria2_remote();
+            }
+            else
+            {
+                Write_event_logs_for_application("aria2c_rpc", "Connection Not Ok", EventLogEntryType.Information);
+
+                // point the timer elapsed to the handler
+                internet_timer.Elapsed += new ElapsedEventHandler(internet_Timer_Elapsed);
+                // turn on the timer
+                internet_timer.Enabled = true;
+
+                Write_event_logs_for_application("aria2c_rpc", "itimer started", EventLogEntryType.Information);
+            }
+        }
+
+        private void internet_Timer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            Write_event_logs_for_application("aria2c_rpc", "itimer expired", EventLogEntryType.Information);
+
+            if (CheckForInternetConnection())
+            {
+                Write_event_logs_for_application("aria2c_rpc", "connection ok - 2nd check", EventLogEntryType.Information);
+
+                internet_timer.Enabled = false;
+                start_aria2_remote();
+
+                Write_event_logs_for_application("aria2c_rpc", "2nd check - itimer disabled", EventLogEntryType.Information);
+
+            }
+            else
+            {
+                Write_event_logs_for_application("aria2c_rpc", "connection not ok - 2nd check", EventLogEntryType.Information);
+
+                secondsElapsed += 10;
+
+                Write_event_logs_for_application("aria2c_rpc", "2nd check - itimer restarted", EventLogEntryType.Information);
+
+            }
+        }
+
+        private void start_aria2_remote()
         {
             ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.CreateNoWindow = false;
@@ -45,12 +108,12 @@ namespace aria2c_service
             aria2c_process_id = Process.Start(startInfo).Id;
 
             // point the timer elapsed to the handler
-            timer.Elapsed += new ElapsedEventHandler(Timer_Elapsed);
+            aria2_timer.Elapsed += new ElapsedEventHandler(aria2_Timer_Elapsed);
             // turn on the timer
-            timer.Enabled = true;
+            aria2_timer.Enabled = true;
         }
 
-        private void Timer_Elapsed(object sender, ElapsedEventArgs e)
+        private void aria2_Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
             Aria2c_service_main();
         }
@@ -65,7 +128,12 @@ namespace aria2c_service
 
         protected override void OnStop()
         {
-            timer.Enabled = false;
+            stop_aria2_remote();
+        }
+
+        private void stop_aria2_remote()
+        {
+            aria2_timer.Enabled = false;
             try
             {
                 Process proc = Process.GetProcessById(aria2c_process_id);
