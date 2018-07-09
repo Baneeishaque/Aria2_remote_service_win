@@ -8,6 +8,7 @@ namespace commons_lib
 {
     public class Process_Utils
     {
+        public static Exception LAST_EXCEPTION;
         public static int Start_with_arguments(String source, String file, String arguments)
         {
             //TODO : Handle Exception
@@ -16,7 +17,7 @@ namespace commons_lib
             {
                 CreateNoWindow = false,
                 UseShellExecute = false,
-
+                RedirectStandardOutput = true,
                 FileName = file
             };
 
@@ -25,7 +26,15 @@ namespace commons_lib
 
             startInfo.Arguments = arguments;
 
-            return Process.Start(startInfo).Id;
+            try
+            {
+                return Process.Start(startInfo).Id;
+            }
+            catch(Exception ex)
+            {
+                LAST_EXCEPTION = ex;
+                return 0;
+            }
         }
 
         public static bool Kill(String source,int process_id)
