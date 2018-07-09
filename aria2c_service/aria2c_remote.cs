@@ -115,6 +115,8 @@ namespace aria2c_service
 
         private void aria2_Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
+            //TODO : Check Connection, If Not - Stop aria2_remote & On itimer, otherwise continue
+            //TODO : aria2_timer time period dicrease - intro flag to avoid multiple requests
             Aria2c_service_main();
         }
 
