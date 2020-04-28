@@ -1,0 +1,32 @@
+add torrent
+add metalink
+remove
+force remove
+pause
+pause all
+force pause
+force pause all
+unpause
+unpause all
+tell status
+getUris
+getFiles
+getPeers
+getServers
+changePosition
+changeUri
+getOption
+changeOption
+getGlobalOption
+changeGlobalOption
+getGlobalStat
+purgeDownloadResult
+removeDownloadResult
+getVersion
+getSessionInfo
+aria2.shutdown
+forceShutdown
+saveSession
+multicall
+
+json rpc web socket
